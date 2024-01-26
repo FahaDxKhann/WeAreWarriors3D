@@ -8,6 +8,9 @@ public class Controller : MonoBehaviour
     public GameController gameController;
     public LevelController levelController;
     public UiController uiController;
+    public MeatManager meatManager;
+    public CurrencyManager currencyManager;
+    public PurchaseManager purchaseManager;
 
     private void Awake() 
     {

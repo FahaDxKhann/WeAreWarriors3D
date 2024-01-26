@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class GlobalData : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static GlobalData instance;
+    public bool isGameStarted;
 
-    // Update is called once per frame
-    void Update()
+
+
+    private void Awake() 
     {
-        
+        instance = this;
     }
 }
