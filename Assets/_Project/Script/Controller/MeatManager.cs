@@ -8,15 +8,6 @@ public class MeatManager : MonoBehaviour
     public float maxMeatGenarationTime = 0.8f;
 
 
-    private void Update() 
-    {
-        #if UNITY_EDITOR
-        if(Input.GetKeyDown(KeyCode.D))
-        {
-            DecreaseMeatGenarationTime();
-        }
-        #endif
-    }
     public int GetCurrentlyStoredMeat()
     {
         return Controller.self.uiController.ingamePannel.GetCurrentlyStoredMeat();
@@ -49,16 +40,30 @@ public class MeatManager : MonoBehaviour
         {
             time = time - defaultDecreaseUnit;
             PlayerPrefs.SetFloat("PerMeatGenarationTime", time);
+            PlayerPrefs.SetFloat("CurrentDecreaseTime", defaultDecreaseUnit);
             IncreaseMeatGenerationLevel();
             Controller.self.uiController.ingamePannel.meatSlider.ChangeDuration(time);
         }
         else
         {
-            float decreseAmount = defaultDecreaseUnit + 0.02f;
+            float decreseAmount = GetCurrentDecreaseAmount() + 0.02f;
+            PlayerPrefs.SetFloat("CurrentDecreaseTime", decreseAmount);
             time = time - decreseAmount;
             PlayerPrefs.SetFloat("PerMeatGenarationTime", time);
             IncreaseMeatGenerationLevel();
             Controller.self.uiController.ingamePannel.meatSlider.ChangeDuration(time);
+        }
+    }
+
+    public float GetCurrentDecreaseAmount()
+    {
+        if(!PlayerPrefs.HasKey("CurrentDecreaseTime"))
+        {
+            return 0.18f;
+        }
+        else
+        {
+            return PlayerPrefs.GetFloat("CurrentDecreaseTime");
         }
     }
 

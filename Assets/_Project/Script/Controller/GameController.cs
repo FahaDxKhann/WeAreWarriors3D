@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         GlobalData.instance.isGameStarted = this;
+        Controller.self.uiController.ingamePannel.gameObject.SetActive(true);
+        Controller.self.uiController.startPannelView.gameObject.SetActive(false);
     }
 
     private void Update() 
