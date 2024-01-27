@@ -43,4 +43,9 @@ public class PurchaseManager : MonoBehaviour
             return PlayerPrefs.GetInt("CurrentMeatUpgradePrice");
         }
     }
+
+    public void PurchaseTroop(int troopNumber)
+    {
+        Controller.self.troopsManager.UnlockTroop(troopNumber);
+    }
 }

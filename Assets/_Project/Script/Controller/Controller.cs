@@ -11,6 +11,7 @@ public class Controller : MonoBehaviour
     public MeatManager meatManager;
     public CurrencyManager currencyManager;
     public PurchaseManager purchaseManager;
+    public TroopsManager troopsManager;
 
     private void Awake() 
     {

@@ -68,5 +68,7 @@ public class MeatSliderView : MonoBehaviour
     {
         currentlyMeatStored = currentlyMeatStored + 1;
         meatStoredText.text = currentlyMeatStored.ToString();
+
+        Controller.self.uiController.ingamePannel.RefreshTroopButtons();
     }
 }

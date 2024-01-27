@@ -17,7 +17,7 @@ public class StartPannelView : MonoBehaviour
         homeBOrgRect = homeButton.GetComponent<RectTransform>().position;
         upgradeShopBOrgRect = upgradeShopButton.GetComponent<RectTransform>().position;
 
-        homeButton.GetComponent<RectTransform>().position = new Vector3(homeBOrgRect.x,homeBOrgRect.y + 40f,homeBOrgRect.z);
+        homeButton.GetComponent<RectTransform>().DOMove(new Vector3(homeBOrgRect.x,homeBOrgRect.y + 40f,homeBOrgRect.z),0.2f).SetEase(Ease.OutBack);
     }
 
 
@@ -35,6 +35,7 @@ public class StartPannelView : MonoBehaviour
         battleButton.SetActive(false);
         Controller.self.uiController.upgradeShopPannelView.gameObject.SetActive(true);
         Controller.self.uiController.upgradeShopPannelView.UpdateTexts();
+        Controller.self.uiController.upgradeShopPannelView.RefreshUi();
     }
 
     public void BattleButton()

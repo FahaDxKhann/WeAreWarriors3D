@@ -13,6 +13,8 @@ public class UpgradeShopPannelView : MonoBehaviour
     public Sprite unlockImage;
     public Sprite lockImage;
 
+    public Button[] troopButtons;
+
     public void MeatGenUpgradeButton()
     {
         Controller.self.purchaseManager.UpgradeMeatGeneration();
@@ -34,6 +36,17 @@ public class UpgradeShopPannelView : MonoBehaviour
             upgradeButton.interactable = true;
             meatUpgradeBG.sprite = unlockImage;
             priceText.color = Color.black;
+        }
+    }
+
+    public void RefreshUi()
+    {
+        UpdateTexts();
+
+
+        for (int i = 0; i < troopButtons.Length; i++)
+        {
+            troopButtons[i].GetComponent<TroopButton>().OnStart();
         }
     }
 }
