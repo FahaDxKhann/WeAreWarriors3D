@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TroopsManager : MonoBehaviour
 {
+    public GameObject[] troops;
+    public Transform playerHouse;
+    public Transform enemyHouse;
     public bool IsTroopUnlocked(int troopNumber)
     {
         if(!PlayerPrefs.HasKey("IsTroop"+troopNumber.ToString()+"Unlocked"))
@@ -20,5 +23,11 @@ public class TroopsManager : MonoBehaviour
     {
         PlayerPrefs.SetString("IsTroop" + troopNumber.ToString() + "Unlocked", "true");
         Controller.self.uiController.ingamePannel.RefreshTroopButtons();
+    }
+    
+    public void SpawnTroops(int index)
+    {
+        GameObject troop = Instantiate(troops[index]);
+        troop.SetActive(true);
     }
 }

@@ -8,6 +8,8 @@ public class IngamePannelView : MonoBehaviour
     public Button[] troopButtons;
     public MeatSliderView meatSlider;
 
+
+
     public int GetCurrentlyStoredMeat()
     {
         return meatSlider.currentlyMeatStored;
@@ -46,5 +48,10 @@ public class IngamePannelView : MonoBehaviour
                 troopButtons[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    public void OnTroopButtonClick(int index)
+    {
+        Controller.self.troopsManager.SpawnTroops(index);
     }
 }
