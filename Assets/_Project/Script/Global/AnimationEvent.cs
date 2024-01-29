@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class AnimationEvent : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void GiveDamage()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this.transform.parent.gameObject.transform.parent.GetComponent<TroopsView>().StartDamaging();
     }
 }

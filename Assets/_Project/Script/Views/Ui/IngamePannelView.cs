@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class IngamePannelView : MonoBehaviour
 {
     public Button[] troopButtons;
     public MeatSliderView meatSlider;
+    public GameObject popUp;
+    public TextMeshProUGUI popUpText;
+    public GameObject bg;
 
 
 
@@ -52,6 +57,22 @@ public class IngamePannelView : MonoBehaviour
 
     public void OnTroopButtonClick(int index)
     {
+        troopButtons[index].GetComponent<Animation>().Play();
         Controller.self.troopsManager.SpawnTroops(index);
+    }
+
+    public void ShowGameOverPopUp()
+    {
+        popUp.SetActive(true);
+        meatSlider.gameObject.SetActive(false);
+        troopButtons[0].gameObject.transform.parent.gameObject.SetActive(false);
+        bg.SetActive(false);
+        popUpText.text = Controller.self.currencyManager.collectedCoin.ToString();
+    }
+
+    public void CollectButton()
+    {
+        Controller.self.currencyManager.AddCoin(Controller.self.currencyManager.collectedCoin);
+        SceneManager.LoadScene(0);
     }
 }

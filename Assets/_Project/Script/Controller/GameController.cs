@@ -9,6 +9,12 @@ public class GameController : MonoBehaviour
         GlobalData.instance.isGameStarted = this;
         Controller.self.uiController.ingamePannel.gameObject.SetActive(true);
         Controller.self.uiController.startPannelView.gameObject.SetActive(false);
+        Controller.self.enemyWaveManager.StartEnemyWave();
+    }
+
+    public void OnGameOver()
+    {
+        Controller.self.uiController.OnGameOver();
     }
 
     private void Update() 

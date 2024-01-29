@@ -12,6 +12,7 @@ public class Controller : MonoBehaviour
     public CurrencyManager currencyManager;
     public PurchaseManager purchaseManager;
     public TroopsManager troopsManager;
+    public EnemyWaveManager enemyWaveManager;
 
     private void Awake() 
     {

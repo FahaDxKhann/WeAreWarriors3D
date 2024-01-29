@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class TroopsManager : MonoBehaviour
 {
-    public GameObject[] troops;
+    public GameObject[] playerTroops;
+    public GameObject[] enemyTroops;
     public Transform playerHouse;
     public Transform enemyHouse;
     public bool IsTroopUnlocked(int troopNumber)
@@ -27,7 +29,7 @@ public class TroopsManager : MonoBehaviour
     
     public void SpawnTroops(int index)
     {
-        GameObject troop = Instantiate(troops[index]);
-        troop.SetActive(true);
+        GameObject troop = Instantiate(playerTroops[index]);
+        playerHouse.GetComponent<Animation>().Play();
     }
 }

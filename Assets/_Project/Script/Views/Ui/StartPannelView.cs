@@ -23,6 +23,7 @@ public class StartPannelView : MonoBehaviour
 
     public void HomeButton()
     {
+        homeButton.GetComponent<Animation>().Play();
         homeButton.GetComponent<RectTransform>().DOMove(new Vector3(homeBOrgRect.x,homeBOrgRect.y + 40f,homeBOrgRect.z),0.2f).SetEase(Ease.OutBack);
         upgradeShopButton.GetComponent<RectTransform>().DOMove(upgradeShopBOrgRect, 0.1f);
         battleButton.SetActive(true);
@@ -30,6 +31,7 @@ public class StartPannelView : MonoBehaviour
     }
     public void UpgradeShopButton()
     {
+        upgradeShopButton.GetComponent<Animation>().Play();
         upgradeShopButton.GetComponent<RectTransform>().DOMove(new Vector3(upgradeShopBOrgRect.x,upgradeShopBOrgRect.y + 40f,upgradeShopBOrgRect.z),0.2f).SetEase(Ease.OutBack);
         homeButton.GetComponent<RectTransform>().DOMove(homeBOrgRect, 0.1f);
         battleButton.SetActive(false);
@@ -41,5 +43,6 @@ public class StartPannelView : MonoBehaviour
     public void BattleButton()
     {
         Controller.self.gameController.StartGame();
+        battleButton.GetComponent<Animation>().Play();
     }
 }

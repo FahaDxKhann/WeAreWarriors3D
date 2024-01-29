@@ -15,4 +15,9 @@ public class UiController : MonoBehaviour
         startPannelView.gameObject.SetActive(true);
         upgradeShopPannelView.gameObject.SetActive(false);
     }
+
+    public void OnGameOver()
+    {
+        ingamePannel.ShowGameOverPopUp();
+    }
 }

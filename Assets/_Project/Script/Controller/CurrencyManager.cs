@@ -6,6 +6,7 @@ using TMPro;
 public class CurrencyManager : MonoBehaviour
 {
     public TextMeshProUGUI CoinText;
+    public int collectedCoin;
 
 
     private void Start() 

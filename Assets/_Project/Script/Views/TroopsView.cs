@@ -2,8 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
-public class TroopsView : MonoBehaviour
+
+public interface IDamageable
+{
+    void TakeDamage(int damage);
+}
+public class TroopsView : MonoBehaviour, IDamageable
 {
     public enum TroopType
     {
@@ -29,6 +35,8 @@ public class TroopsView : MonoBehaviour
     private NavMeshAgent agent;
     public GameObject currentTarget;
     private bool isFighting;
+    public bool isDead;
+    public ParticleSystem hiteffect;
 
 
     private void Start() 
@@ -53,6 +61,7 @@ public class TroopsView : MonoBehaviour
 
     private void Update()
     {
+        if(isDead) return;
         if(isFighting) return;
         if(currentTarget != null)
         {
@@ -104,11 +113,32 @@ public class TroopsView : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
+        if(isDead) return;
         if(other.gameObject.layer == GetDetectionLayerIndex())
         {
+            if(isFighting) return;
             currentTarget = other.gameObject;
             agent.isStopped = true;
             Attack();
+        }
+
+        if(other.gameObject.CompareTag("PlayerHouse"))
+        {
+            if(troopType == TroopType.Enemy)
+            {
+                Attack();
+                currentTarget = other.gameObject;
+                agent.isStopped = true;
+            }
+        }
+        if(other.gameObject.CompareTag("EnemyHouse"))
+        {
+            if(troopType == TroopType.Player)
+            {
+                Attack();
+                currentTarget = other.gameObject;
+                agent.isStopped = true;
+            }
         }
     }
 
@@ -130,5 +160,97 @@ public class TroopsView : MonoBehaviour
     public void Attack()
     {
         animator.SetBool("Attack", true);
+        isFighting = true;
     }
+
+    public void StartDamaging()
+    {
+        if (currentTarget == null)
+        {
+            Reset();
+        }
+        if (currentTarget != null)
+        {
+            // Give damage to House.........
+            if(currentTarget.name == Controller.self.troopsManager.playerHouse.name)
+            {
+                if(troopType == TroopType.Enemy)
+                {
+                    currentTarget.GetComponent<HouseView>().DecreaseHealth();
+                }
+            }
+            else if(currentTarget.name == Controller.self.troopsManager.enemyHouse.name)
+            {
+                if(troopType == TroopType.Player)
+                {
+                    currentTarget.GetComponent<HouseView>().DecreaseHealth();
+                }
+            }
+            else
+            { // Give damage to player.........
+                hiteffect.Play();
+                IDamageable damageableTarget = currentTarget.GetComponent<IDamageable>();
+                if (damageableTarget != null)
+                {
+                    damageableTarget.TakeDamage(giveDamage);
+                }
+            }
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        totalHealth -= damage;
+
+        if (totalHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        isDead = true;
+        this.enabled = false;
+        this.GetComponent<CapsuleCollider>().enabled = false;
+        animator.SetBool("Attack", false);
+        animator.SetBool("Death", true);
+        this.GetComponent<NavMeshObstacle>().enabled = false;
+        
+        if (currentTarget != null)
+        {
+            if (!currentTarget.GetComponent<TroopsView>().isDead)
+            {
+                currentTarget.GetComponent<TroopsView>().Reset();
+            }
+        }
+
+        if(abilityType == AbilityType.Sword)
+        {
+            if (troopType == TroopType.Enemy)
+            {
+                Controller.self.currencyManager.collectedCoin = Controller.self.currencyManager.collectedCoin + 8;
+            }
+        }
+
+        Invoke("DestroyObj", 3);
+    }
+
+    void DestroyObj()
+    {
+        this.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
+         {
+             Destroy(this.gameObject);
+         });
+    }
+
+    public void Reset()
+    {
+        animator.SetBool("Attack", false);
+        currentTarget = null;
+        SetDestination();
+        isFighting = false;
+        agent.isStopped = false;
+    }
+
 }
