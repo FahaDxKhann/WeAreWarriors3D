@@ -9,6 +9,7 @@ public class IngamePannelView : MonoBehaviour
 {
     public Button[] troopButtons;
     public MeatSliderView meatSlider;
+    public GameObject coinEffect;
     public GameObject popUp;
     public TextMeshProUGUI popUpText;
     public GameObject bg;
@@ -75,6 +76,6 @@ public class IngamePannelView : MonoBehaviour
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.coinCollected);
         Controller.self.currencyManager.AddCoin(Controller.self.currencyManager.collectedCoin);
-        SceneManager.LoadScene(0);
+        coinEffect.SetActive(true);
     }
 }
