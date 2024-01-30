@@ -9,6 +9,7 @@ public class HouseView : MonoBehaviour
 {
     public int Health;
 
+    public ParticleSystem hitEffect;
     public Slider slider;
     public TextMeshProUGUI text;
 
@@ -28,6 +29,8 @@ public class HouseView : MonoBehaviour
 
     public void DecreaseHealth()
     {
+        GetComponent<Animation>().Play();
+        hitEffect.Play();
         if(Health > 0)
         {
             Health = Health - 2;

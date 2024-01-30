@@ -66,8 +66,15 @@ public class TroopsView : MonoBehaviour, IDamageable
         if(isFighting) return;
         if(currentTarget != null)
         {
-            currentTarget = currentTarget.gameObject;
-            UpdateDestination();
+            if(currentTarget.GetComponent<TroopsView>().isDead)
+            {
+                SetDestination();
+            }
+            else
+            {
+                currentTarget = currentTarget.gameObject;
+                UpdateDestination();
+            }
             return;
         }
 
