@@ -19,6 +19,7 @@ public class UpgradeShopPannelView : MonoBehaviour
     {
         Controller.self.purchaseManager.UpgradeMeatGeneration();
         UpdateTexts();
+        SoundManager.Instance.PlaySound(SoundManager.Instance.button);
     }
 
     public void UpdateTexts()

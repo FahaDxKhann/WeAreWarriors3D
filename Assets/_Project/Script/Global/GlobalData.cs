@@ -6,6 +6,7 @@ public class GlobalData : MonoBehaviour
 {
     public static GlobalData instance;
     public bool isGameStarted;
+    public bool isGameOver;
 
 
 

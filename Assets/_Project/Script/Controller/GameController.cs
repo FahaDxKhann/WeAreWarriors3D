@@ -14,7 +14,9 @@ public class GameController : MonoBehaviour
 
     public void OnGameOver()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.lost);
         Controller.self.uiController.OnGameOver();
+        GlobalData.instance.isGameOver = true;
     }
 
     private void Update() 

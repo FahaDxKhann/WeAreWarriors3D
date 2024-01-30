@@ -38,6 +38,7 @@ public class HouseView : MonoBehaviour
 
     public void OnFinishHealth()
     {
+        if(GlobalData.instance.isGameOver) return;
         if(Health <= 0)
         {
             Controller.self.gameController.OnGameOver();

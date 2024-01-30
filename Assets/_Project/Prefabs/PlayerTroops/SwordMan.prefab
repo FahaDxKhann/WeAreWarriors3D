@@ -59,6 +59,7 @@ MonoBehaviour:
   totalHealth: 100
   giveDamage: 50
   animator: {fileID: 667207610511508272}
+  weapon: {fileID: 4099720720710029723}
   currentTarget: {fileID: 0}
   isDead: 0
   hiteffect: {fileID: 4854437205292803419}
@@ -72,7 +73,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.46
-  m_Speed: 0.5
+  m_Speed: 0.4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 460
@@ -119,10 +120,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.81
+  m_Radius: 1.6175901
   m_Height: 4.088719
   m_Direction: 1
-  m_Center: {x: 0, y: 1.5443594, z: 0}
+  m_Center: {x: 1.6207123e-10, y: 1.5443542, z: -0.19240975}
 --- !u!54 &548794029886430026
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -551,7 +552,7 @@ PrefabInstance:
     - target: {fileID: 5903811772092054893, guid: 1cd4f52f5ece47a4e8cc36bba87311a1,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9148550440889460785, guid: 1cd4f52f5ece47a4e8cc36bba87311a1,
         type: 3}
@@ -626,6 +627,12 @@ PrefabInstance:
 --- !u!4 &1728680663174841543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9148550440889460785, guid: 1cd4f52f5ece47a4e8cc36bba87311a1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7569336841592777974}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4099720720710029723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5903811772092054893, guid: 1cd4f52f5ece47a4e8cc36bba87311a1,
     type: 3}
   m_PrefabInstance: {fileID: 7569336841592777974}
   m_PrefabAsset: {fileID: 0}

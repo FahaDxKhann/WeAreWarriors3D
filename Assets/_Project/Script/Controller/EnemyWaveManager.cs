@@ -3,35 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
+
+[System.Serializable]
+public class TroopInfo
+{
+    public GameObject troopPrefab;
+    public int troopCount;
+}
+
+[System.Serializable]
+public class Wave
+{
+    public TroopInfo[] troops;
+}
 public class EnemyWaveManager : MonoBehaviour
 {
-    public int totalWaveCount;
-    private int currentWave;
-
-    public List<int> enemysPerWave = new List<int>();
-
-
+    public Wave[] waves;
+    public int totalWaves = 20;
 
     public void StartEnemyWave()
     {
-        InvokeRepeating("StartInvoke", 2, 25);
+        StartCoroutine(SpawnWaves());
     }
 
-    public void StartInvoke()
+    IEnumerator SpawnWaves()
     {
-        StartCoroutine(StartGenerating(0));
-    }
-
-    public IEnumerator StartGenerating(int waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        for (int i = 0; i < enemysPerWave[currentWave]; i++)
+        for (int waveIndex = 0; waveIndex < totalWaves; waveIndex++)
         {
-            Controller.self.troopsManager.enemyHouse.GetComponent<Animation>().Play();
-            Instantiate(Controller.self.troopsManager.enemyTroops[0]);
-            yield return new WaitForSeconds(0.5f);
-        }
+            Wave currentWave = waves[Mathf.Min(waveIndex, waves.Length - 1)];
+            Debug.Log("Wave " + (waveIndex + 1) + ":");
 
-        currentWave++;
+            foreach (TroopInfo troopInfo in currentWave.troops)
+            {
+                Debug.Log(troopInfo.troopCount + " " + troopInfo.troopPrefab.name + "(s)");
+
+                for (int i = 0; i < troopInfo.troopCount; i++)
+                {
+                    Instantiate(troopInfo.troopPrefab);
+                    float randomDelayPerSpawn = Random.Range(0.3f, 0.6f);
+                    // Adjust the delay between troop spawns if needed
+                    yield return new WaitForSeconds(randomDelayPerSpawn);
+                }
+            }
+
+            // Adjust the delay between waves if needed
+            yield return new WaitForSeconds(20f);
+        }
     }
 }

@@ -9,6 +9,7 @@ public class TroopsManager : MonoBehaviour
     public GameObject[] enemyTroops;
     public Transform playerHouse;
     public Transform enemyHouse;
+    public GameObject troopDeadEffect;
     public bool IsTroopUnlocked(int troopNumber)
     {
         if(!PlayerPrefs.HasKey("IsTroop"+troopNumber.ToString()+"Unlocked"))

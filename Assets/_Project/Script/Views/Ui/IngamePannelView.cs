@@ -59,6 +59,7 @@ public class IngamePannelView : MonoBehaviour
     {
         troopButtons[index].GetComponent<Animation>().Play();
         Controller.self.troopsManager.SpawnTroops(index);
+        SoundManager.Instance.PlaySound(SoundManager.Instance.button);
     }
 
     public void ShowGameOverPopUp()
@@ -72,6 +73,7 @@ public class IngamePannelView : MonoBehaviour
 
     public void CollectButton()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.coinCollected);
         Controller.self.currencyManager.AddCoin(Controller.self.currencyManager.collectedCoin);
         SceneManager.LoadScene(0);
     }

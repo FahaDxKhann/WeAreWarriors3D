@@ -33,6 +33,7 @@ public class TroopsView : MonoBehaviour, IDamageable
     public int giveDamage;
     public Animator animator;
     private NavMeshAgent agent;
+    public GameObject weapon;
     public GameObject currentTarget;
     private bool isFighting;
     public bool isDead;
@@ -200,6 +201,7 @@ public class TroopsView : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.gotHit);
         totalHealth -= damage;
 
         if (totalHealth <= 0)
@@ -211,12 +213,12 @@ public class TroopsView : MonoBehaviour, IDamageable
     private void Die()
     {
         isDead = true;
-        this.enabled = false;
         this.GetComponent<CapsuleCollider>().enabled = false;
         animator.SetBool("Attack", false);
         animator.SetBool("Death", true);
         this.GetComponent<NavMeshObstacle>().enabled = false;
-        
+        agent.speed = 0;
+
         if (currentTarget != null)
         {
             if (!currentTarget.GetComponent<TroopsView>().isDead)
@@ -233,13 +235,23 @@ public class TroopsView : MonoBehaviour, IDamageable
             }
         }
 
-        Invoke("DestroyObj", 3);
+        Invoke("DestroyObj", 4);
+        this.enabled = false;
+        weapon.transform.parent = null;
+        weapon.AddComponent<Rigidbody>();
+        weapon.AddComponent<BoxCollider>();
+        // weapon.GetComponent<Rigidbody>().isKinematic = false;
+        // weapon.GetComponent<MeshCollider>().enabled = true;
     }
 
     void DestroyObj()
     {
+        GameObject effect = Lean.Pool.LeanPool.Spawn(Controller.self.troopsManager.troopDeadEffect);
+        effect.transform.position = new Vector3(this.transform.position.x,-10.32f,this.transform.position.z);
         this.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
          {
+             Lean.Pool.LeanPool.Despawn(effect,1);
+             Destroy(weapon);
              Destroy(this.gameObject);
          });
     }
